@@ -3,13 +3,16 @@ const MAP_SIZE = 500;
 const SPEED = 3;
 const ROTATION_SPEED = 3;
 
+const MAX_BULLETS = 5;
+const BULLET_DELAY = 1000; // ms
+
 const UPDATE_FPS = 60;
 
 const me_id = 0;
 
 var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
-var dummy_players = {"0": dummy_me};
+var dummy_players = {0: dummy_me};
 
 var dummy_bullets_0 = {
   0: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
@@ -17,7 +20,7 @@ var dummy_bullets_0 = {
   2: {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
 };
 
-var dummy_bullets = {me_id: dummy_bullets_0};
+var dummy_bullets = {0: dummy_bullets_0};
 
 var dummy_state = [dummy_players, dummy_bullets];
 
@@ -29,6 +32,7 @@ var bullets = state[1];
 var me = players[me_id];
 
 var initTime;
+var lastBulletTime;
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
@@ -91,12 +95,36 @@ function onKeyUp(e) {
 function onFire() {
   // how to implement delay between bullets?
 
-  var num_bullets = 0;
-  // Object.keys(bullets[me_id]).forEach(function(key) {
-  //   // console.log(key, dictionary[key]);
-  // });
+  console.log("onFire");
 
-  // todo - check if max_bullet
+  var num_bullets = Object.keys(bullets[me_id]).length;
+  // console.log(Object.keys(bullets[me_id]));
+  // console.log(Object.keys(bullets[me_id]).length);
+
+  var elapsed;
+
+  if (num_bullets <= MAX_BULLETS) {
+
+    var d = new Date();
+    var currentTime = d.getTime();
+    console.log("current: ", currentTime);
+    elapsed = currentTime - lastBulletTime;
+    console.log("elapsed: ", elapsed)
+
+    // console.log("lastBulletTime: ", lastBulletTime);
+
+    if (elapsed >= BULLET_DELAY) {
+      
+      console.log("fire");
+      lastBulletTime = currentTime;
+      // console.log("lastBulletTime: ", lastBulletTime);
+    } else {
+      console.log("cannot fire: not enough time passed since last bullet")
+    }
+
+    // console.log("lastBulletTime: ", lastBulletTime);
+
+  }
 
   // todo - check if bullet_delay surpassed
 
@@ -159,4 +187,6 @@ export function startEventLoop() {
 
   var d = new Date();
   initTime = d.getTime();
+
+  lastBulletTime = 0;
 }
