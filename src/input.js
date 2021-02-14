@@ -4,7 +4,15 @@ const me_id = 0;
 
 var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
-var dummy_players = {0: dummy_me};
+var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0};
+
+var dummy_players = {0: dummy_me, 1: dummy_other};
+
+var dummy_walls = [
+  [[1, 1], [1, 0], [0, 1]],
+  [[0, 1], [0, 0], [0, 1]],
+  [[1, 0], [1, 0], [0, 0]]
+]
 
 var dummy_bullets_0 = [
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
@@ -12,14 +20,17 @@ var dummy_bullets_0 = [
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
   ];
 
-var dummy_bullets = {0: dummy_bullets_0};
+var dummy_bullets_1 = [];
 
-var dummy_state = [dummy_players, dummy_bullets];
+var dummy_bullets = {0: dummy_bullets_0, 1: dummy_bullets_1};
+
+var dummy_state = {"players": dummy_players,"bullets":  dummy_bullets,"walls": dummy_walls};
 
 var state = dummy_state;
 
-var players = state[0];
-var bullets = state[1];
+var players = state["players"];
+var bullets = state["bullets"];
+var walls = state["walls"];
 
 var me = players[me_id];
 
@@ -27,6 +38,8 @@ var initTime;
 var lastBulletTime;
 
 var bulletIds = Array(MAX_BULLETS).fill(1).map((x, y) => x + y);
+
+var d = new Date();
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
@@ -100,7 +113,6 @@ function onFire() {
 
   if (num_bullets < MAX_BULLETS) {
 
-    var d = new Date();
     var currentTime = d.getTime();
     console.log("current: ", currentTime);
     elapsed = currentTime - lastBulletTime;
@@ -150,7 +162,6 @@ function createBullet(player_id, t) {
 function updateBullet(bullet) {
   console.log("Bullet updated.");
 
-  var d = new Date();
   bullet.elapsed_time = d.getTime() - bullet.fire_time;
 
   if (bullet.elapsed_time >= BULLET_TIMEOUT) {
@@ -186,12 +197,16 @@ function update() {
   // todo - update all others
 }
 
-export function getMe() {
-  return me;
+export function getMeId() {
+  return me_id;
 }
 
 export function getBullets() {
   return bullets;
+}
+
+export function getPlayers() {
+  return players;
 }
 
 export function startCapturingInput() {
@@ -210,7 +225,6 @@ export function startEventLoop() {
   clearInterval(updateInterval);
   updateInterval = setInterval(update, 1000 / UPDATE_FPS);
 
-  var d = new Date();
   initTime = d.getTime();
 
   console.log("bullet ids" + bulletIds);

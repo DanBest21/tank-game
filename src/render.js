@@ -1,8 +1,10 @@
-import { getMe, getBullets } from "./input.js"
+import { getMeId, getBullets, getPlayers } from "./input.js"
 
 
 // todo - move constants to some shared location (obtained from server?)
 import { MAP_SIZE, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
+
+const WALL_RADIUS = 2;
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -19,8 +21,8 @@ function setCanvasDimensions() {
 function render() {
   // todo - get all objects in world (current state)
   // const { me, others, bullets } = getCurrentState();
-
-  var me = getMe(); // dummy me
+  var players = getPlayers();
+  var me = players[getMeId()]; // dummy me
   var bullets = getBullets(); // todo - get
   var others;  // todo - get
   var walls;   // todo - get
@@ -34,7 +36,9 @@ function render() {
   // todo - render walls
 
   // render player
-  renderPlayer(me, me)
+  // renderPlayer(me, me)
+
+  Object.values(players).forEach((player) => {renderPlayer(me, player)});
 
   // render bullets
   // bullets.forEach(renderBullet);
@@ -60,7 +64,7 @@ function renderPlayer(me, player) {
 
   // Draw player
   context.save();
-  context.translate(me.x, me.y);
+  context.translate(player.x, player.y);
   context.rotate(-theta);
   context.fillStyle = 'red';
   context.fillRect(
