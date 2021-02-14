@@ -45,7 +45,7 @@ function render() {
   // render bullets
   // bullets.forEach(renderBullet);
 
-  Object.values(bullets).forEach(player => Object.values(player).forEach(bullet => renderBullet(bullet)));
+  Object.values(bullets).forEach(player_bullets => player_bullets.forEach(renderBullet));
   
   // todo - render others
 }

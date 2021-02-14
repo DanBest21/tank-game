@@ -4,7 +4,9 @@ const SPEED = 3;
 const ROTATION_SPEED = 3;
 
 const MAX_BULLETS = 5;
-const BULLET_DELAY = 1000; // ms
+const BULLET_DELAY = 100; // ms
+
+const BULLET_SPEED = 4;
 
 const UPDATE_FPS = 60;
 
@@ -14,11 +16,11 @@ var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "a
 
 var dummy_players = {0: dummy_me};
 
-var dummy_bullets_0 = {
-  0: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
-  1: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
-  2: {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
-};
+var dummy_bullets_0 = [
+  {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
+  {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
+  {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
+  ];
 
 var dummy_bullets = {0: dummy_bullets_0};
 
@@ -36,6 +38,11 @@ var lastBulletTime;
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
+
+function createBullet(player_id) {
+  var player_bullets = bullets[player_id];
+  player_bullets.push({"x": me.x, "y": me.y, "v_x": BULLET_SPEED * -Math.sin(me.theta), "v_y": BULLET_SPEED * -Math.cos(me.theta)});
+}
 
 function onKeyDown(e) {
   switch (e.keyCode) {
@@ -97,13 +104,14 @@ function onFire() {
 
   console.log("onFire");
 
-  var num_bullets = Object.keys(bullets[me_id]).length;
+  var num_bullets = bullets[me_id].length;
+  console.log(num_bullets);
   // console.log(Object.keys(bullets[me_id]));
   // console.log(Object.keys(bullets[me_id]).length);
 
   var elapsed;
 
-  if (num_bullets <= MAX_BULLETS) {
+  if (num_bullets < MAX_BULLETS) {
 
     var d = new Date();
     var currentTime = d.getTime();
@@ -116,6 +124,9 @@ function onFire() {
     if (elapsed >= BULLET_DELAY) {
       
       console.log("fire");
+
+      createBullet(me_id);
+
       lastBulletTime = currentTime;
       // console.log("lastBulletTime: ", lastBulletTime);
     } else {
@@ -156,7 +167,7 @@ function update() {
   rotatePlayer(me);
   movePlayer(me);
 
-  Object.values(bullets).forEach(player => Object.values(player).forEach(bullet => updateBullet(bullet)));
+  Object.values(bullets).forEach(player_bullets => player_bullets.forEach(updateBullet));
 
   // todo - update all others
 }
