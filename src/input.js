@@ -2,15 +2,24 @@
 const MAP_SIZE = 500;
 const SPEED = 3;
 const ROTATION_SPEED = 3;
-var me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
-var bullets = new Array(3);
-bullets[0] = {"x": me.x, "y": me.y, "v_x": 1, "v_y": 1};
-bullets[1] = {"x": me.x, "y": me.y, "v_x": 1, "v_y": -1};
-bullets[2] = {"x": me.x, "y": me.y, "v_x": -1, "v_y": 1};
+const me_id = 0;
 
-// var 
+var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
+var dummy_players = {"0": dummy_me};
+
+var dummy_bullets = {
+  0: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
+  1: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
+  2: {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
+};
+var dummy_state = [dummy_players, dummy_bullets];
+
+var players = dummy_state[0];
+var bullets = dummy_state[1];
+
+var me = players[me_id];
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
@@ -73,6 +82,7 @@ function onKeyUp(e) {
 
 function onFire() {
   // how to implement delay between bullets?
+  // todo - check if max_bullet
 }
 
 function rotatePlayer(player) {
@@ -99,7 +109,12 @@ function update() {
   rotatePlayer(me);
   movePlayer(me);
 
-  bullets.forEach(updateBullet);
+  Object.keys(bullets).forEach(function(key) {
+    // console.log(key, dictionary[key]);
+    updateBullet(bullets[key]);
+  });
+
+  // bullets.forEach(updateBullet);
 
   // todo - update all others
 }

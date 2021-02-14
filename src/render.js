@@ -41,7 +41,12 @@ function render() {
   renderPlayer(me, me)
 
   // render bullets
-  bullets.forEach(renderBullet);
+  // bullets.forEach(renderBullet);
+
+  Object.keys(bullets).forEach(function(key) {
+    // console.log(key, dictionary[key]);
+    renderBullet(bullets[key]);
+  });
 
   // todo - render others
 }
