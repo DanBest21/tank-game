@@ -3,6 +3,8 @@ const MAP_SIZE = 500;
 const SPEED = 3;
 const ROTATION_SPEED = 3;
 
+const UPDATE_FPS = 30;
+
 const me_id = 0;
 
 var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
@@ -142,7 +144,7 @@ var initTime;
 let updateInterval;
 export function startEventLoop() {
   clearInterval(updateInterval);
-  updateInterval = setInterval(update, 1000 / 60);
+  updateInterval = setInterval(update, 1000 / UPDATE_FPS);
 
   // initTime = 
 }

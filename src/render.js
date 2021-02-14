@@ -6,7 +6,9 @@ const MAP_SIZE = 500;
 const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 20;
 
-const BULLET_RADIUS = 5;
+const RENDER_FPS = 60;
+
+const BULLET_RADIUS = 3;
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -92,10 +94,10 @@ export function startRendering() {
   // alert("hello");
   // Draw boundaries
   clearInterval(renderInterval);
-  renderInterval = setInterval(render, 1000 / 60);
+  renderInterval = setInterval(render, 1000 / RENDER_FPS);
 }
 
 export function stopRendering() {
-  clearInterval(renderInterval);
+  // clearInterval(renderInterval);
   // renderInterval = setInterval(renderMainMenu, 1000 / 60);
 }
