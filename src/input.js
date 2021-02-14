@@ -15,7 +15,9 @@ const me_id = 0;
 
 var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
-var dummy_players = {0: dummy_me};
+var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0};
+
+var dummy_players = {0: dummy_me, 1: dummy_other};
 
 var dummy_bullets_0 = [
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
@@ -23,7 +25,9 @@ var dummy_bullets_0 = [
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
   ];
 
-var dummy_bullets = {0: dummy_bullets_0};
+var dummy_bullets_1 = [];
+
+var dummy_bullets = {0: dummy_bullets_0, 1: dummy_bullets_1};
 
 var dummy_state = [dummy_players, dummy_bullets];
 
@@ -197,12 +201,16 @@ function update() {
   // todo - update all others
 }
 
-export function getMe() {
-  return me;
+export function getMeId() {
+  return me_id;
 }
 
 export function getBullets() {
   return bullets;
+}
+
+export function getPlayers() {
+  return players;
 }
 
 export function startCapturingInput() {
