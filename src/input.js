@@ -126,9 +126,11 @@ function update() {
   rotatePlayer(me);
   movePlayer(me);
 
+  
+
   Object.keys(bullets).forEach(function(player_key) {
     // console.log(key, dictionary[key]);
-    bullets[player_key].forEach(function(bullet_key) {
+    Object.keys(bullets[player_key]).forEach(function(bullet_key) {
       updateBullet(bullets[player_key][bullet_key]);
     });
   });
