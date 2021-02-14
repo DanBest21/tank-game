@@ -76,17 +76,23 @@ function onFire() {
 }
 
 function rotatePlayer(player) {
-  player.theta += player.angular_velocity * Math.PI / 180;
+  if (player.angular_velocity != 0) {
+    player.theta += player.angular_velocity * Math.PI / 180;
+  }
 }
 
 function movePlayer(player) {
+  if (player.speed != 0) {
   player.x = player.x - (player.speed * Math.sin(player.theta))
   player.y = player.y - (player.speed * Math.cos(player.theta))
+  }
 }
 
 function updateBullet(bullet) {
-  bullet.x += bullet.v_x;
-  bullet.y += bullet.v_y;
+  if (bullet.v_y != 0 || bullet.v_x != 0) {  
+    bullet.x += bullet.v_x;
+    bullet.y += bullet.v_y;
+  }
 }
 
 function update() {
