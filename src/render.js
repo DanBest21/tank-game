@@ -10,6 +10,8 @@ const RENDER_FPS = 60;
 
 const BULLET_RADIUS = 3;
 
+const WALL_RADIUS = 2;
+
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
 setCanvasDimensions();

@@ -19,6 +19,12 @@ var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity
 
 var dummy_players = {0: dummy_me, 1: dummy_other};
 
+var dummy_walls = [
+  [[1, 1], [1, 0], [0, 1]],
+  [[0, 1], [0, 0], [0, 1]],
+  [[1, 0], [1, 0], [0, 0]]
+]
+
 var dummy_bullets_0 = [
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
   // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
@@ -29,12 +35,13 @@ var dummy_bullets_1 = [];
 
 var dummy_bullets = {0: dummy_bullets_0, 1: dummy_bullets_1};
 
-var dummy_state = [dummy_players, dummy_bullets];
+var dummy_state = {"players": dummy_players,"bullets":  dummy_bullets,"walls": dummy_walls};
 
 var state = dummy_state;
 
-var players = state[0];
-var bullets = state[1];
+var players = state["players"];
+var bullets = state["bullets"];
+var walls = state["walls"];
 
 var me = players[me_id];
 
