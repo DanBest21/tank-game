@@ -2,13 +2,7 @@ import { getMe, getBullets } from "./input.js"
 
 
 // todo - move constants to some shared location (obtained from server?)
-const MAP_SIZE = 500;
-const PLAYER_WIDTH = 10;
-const PLAYER_HEIGHT = 20;
-
-const RENDER_FPS = 60;
-
-const BULLET_RADIUS = 3;
+import { MAP_SIZE, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');

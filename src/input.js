@@ -1,15 +1,4 @@
-// TODO: Delete later.
-const MAP_SIZE = 500;
-const SPEED = 3;
-const ROTATION_SPEED = 3;
-
-const MAX_BULLETS = 5;
-const BULLET_DELAY = 100; // ms
-
-const BULLET_SPEED = 4;
-const BULLET_TIMEOUT = 1000; // ms
-
-const UPDATE_FPS = 60;
+import { MAP_SIZE, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_HEIGHT } from "./constants.js";
 
 const me_id = 0;
 
@@ -41,12 +30,6 @@ var bulletIds = Array(MAX_BULLETS).fill(1).map((x, y) => x + y);
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
-
-function createBullet(player_id, t) {
-  var player_bullets = bullets[player_id];
-  player_bullets.push({"id": bulletIds.shift(), "x": me.x, "y": me.y, "v_x": BULLET_SPEED * -Math.sin(me.theta), "v_y": BULLET_SPEED * -Math.cos(me.theta),
-  "fire_time": t, "elapsed_time": 0});
-}
 
 function onKeyDown(e) {
   switch (e.keyCode) {
@@ -156,6 +139,12 @@ function movePlayer(player) {
     player.x = player.x - (player.speed * Math.sin(player.theta))
     player.y = player.y - (player.speed * Math.cos(player.theta))
   }
+}
+
+function createBullet(player_id, t) {
+  var player_bullets = bullets[player_id];
+  player_bullets.push({"id": bulletIds.shift(), "x": me.x /*+ ((PLAYER_HEIGHT / 2) * -Math.sin(theta))*/, "y": me.y /*+ ((PLAYER_HEIGHT / 2) * -Math.cos(theta))*/, "v_x": BULLET_SPEED * -Math.sin(me.theta), "v_y": BULLET_SPEED * -Math.cos(me.theta),
+  "fire_time": t, "elapsed_time": 0});
 }
 
 function updateBullet(bullet) {
