@@ -1,10 +1,12 @@
-import { getMe } from "./input.js"
+import { getMe, getBullets } from "./input.js"
 
 
 // todo - move constants to some shared location (obtained from server?)
 const MAP_SIZE = 500;
 const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 20;
+
+const BULLET_RADIUS = 5;
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -23,7 +25,7 @@ function render() {
   // const { me, others, bullets } = getCurrentState();
 
   var me = getMe(); // dummy me
-  var bullets; // todo - get
+  var bullets = getBullets(); // todo - get
   var others;  // todo - get
   var walls;   // todo - get
 
@@ -35,10 +37,11 @@ function render() {
 
   // todo - render walls
 
-  // todo - render bullets
-
   // render player
   renderPlayer(me, me)
+
+  // render bullets
+  bullets.forEach(renderBullet);
 
   // todo - render others
 }
@@ -69,6 +72,14 @@ function renderPlayer(me, player) {
     PLAYER_HEIGHT,
   );
   context.restore();
+}
+
+function renderBullet(bullet) {
+  context.beginPath();
+  context.arc(bullet.x, bullet.y, BULLET_RADIUS, 0, 2 * Math.PI);
+  // context.stroke(); 
+  context.fillStyle = 'black';
+  context.fill();
 }
 
 let renderInterval;
