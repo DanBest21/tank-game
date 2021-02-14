@@ -45,13 +45,8 @@ function render() {
   // render bullets
   // bullets.forEach(renderBullet);
 
-  Object.keys(bullets).forEach(function(player_key) {
-    // console.log(key, dictionary[key]);
-    Object.keys(bullets[player_key]).forEach(function(bullet_key) {
-      renderBullet(bullets[player_key][bullet_key]);
-    });
-  });
-
+  Object.values(bullets).forEach(player => Object.values(player).forEach(bullet => renderBullet(bullet)));
+  
   // todo - render others
 }
 

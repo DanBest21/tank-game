@@ -116,6 +116,8 @@ function movePlayer(player) {
 }
 
 function updateBullet(bullet) {
+  console.log("Bullet updated.");
+
   if (bullet.v_y != 0 || bullet.v_x != 0) {  
     bullet.x += bullet.v_x;
     bullet.y += bullet.v_y;
@@ -126,16 +128,7 @@ function update() {
   rotatePlayer(me);
   movePlayer(me);
 
-  
-
-  Object.keys(bullets).forEach(function(player_key) {
-    // console.log(key, dictionary[key]);
-    Object.keys(bullets[player_key]).forEach(function(bullet_key) {
-      updateBullet(bullets[player_key][bullet_key]);
-    });
-  });
-
-  // bullets.forEach(updateBullet);
+  Object.values(bullets).forEach(player => Object.values(player).forEach(bullet => updateBullet(bullet)));
 
   // todo - update all others
 }
