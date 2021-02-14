@@ -9,33 +9,38 @@ bullets[0] = {"x": me.x, "y": me.y, "v_x": 1, "v_y": 1};
 bullets[1] = {"x": me.x, "y": me.y, "v_x": 1, "v_y": -1};
 bullets[2] = {"x": me.x, "y": me.y, "v_x": -1, "v_y": 1};
 
+// var 
+
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
 
 function onKeyDown(e) {
   switch (e.keyCode) {
-      case 37:
-      case 65: 
-        me.angular_velocity = ROTATION_SPEED;
-        // console.log("Left pressed"); 
-        break; //Left key
-      case 38:
-      case 87: 
-        me.speed = SPEED;
-        // console.log("Up pressed"); 
-        break; //Up key
-      case 39:
-      case 68: 
-        me.angular_velocity = -1*ROTATION_SPEED;
-        // console.log("Right pressed"); 
-        break; //Right key
-      case 40:
-      case 83:
-        me.speed = -SPEED;
-        // console.log("Down pressed"); 
-        break; //Down key
-      // default: console.log("?"); //Everything else
+    case 32:
+      onFire();
+      break;
+    case 37:
+    case 65: 
+      me.angular_velocity = ROTATION_SPEED;
+      // console.log("Left pressed"); 
+      break; //Left key
+    case 38:
+    case 87: 
+      me.speed = SPEED;
+      // console.log("Up pressed"); 
+      break; //Up key
+    case 39:
+    case 68: 
+      me.angular_velocity = -1*ROTATION_SPEED;
+      // console.log("Right pressed"); 
+      break; //Right key
+    case 40:
+    case 83:
+      me.speed = -SPEED;
+      // console.log("Down pressed"); 
+      break; //Down key
+    // default: console.log("?"); //Everything else
   }
 }
 
@@ -64,6 +69,10 @@ function onKeyUp(e) {
     // default: console.log("?"); //Everything else
 
 }
+}
+
+function onFire() {
+  // how to implement delay between bullets?
 }
 
 function rotatePlayer(player) {
@@ -107,8 +116,12 @@ export function stopCapturingInput() {
   window.removeEventListener('keyup', onKeyUp);
 }
 
+var initTime;
+
 let updateInterval;
 export function startEventLoop() {
   clearInterval(updateInterval);
   updateInterval = setInterval(update, 1000 / 60);
+
+  // initTime = 
 }
