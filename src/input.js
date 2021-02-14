@@ -3,7 +3,7 @@ const MAP_SIZE = 500;
 const SPEED = 3;
 const ROTATION_SPEED = 3;
 
-const UPDATE_FPS = 30;
+const UPDATE_FPS = 60;
 
 const me_id = 0;
 
@@ -11,17 +11,22 @@ var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "a
 
 var dummy_players = {"0": dummy_me};
 
-var dummy_bullets = {
+var dummy_bullets_0 = {
   0: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
   1: {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
   2: {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
 };
+
+var dummy_bullets = {me_id: dummy_bullets_0};
+
 var dummy_state = [dummy_players, dummy_bullets];
 
 var players = dummy_state[0];
 var bullets = dummy_state[1];
 
 var me = players[me_id];
+
+var initTime;
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
@@ -78,13 +83,21 @@ function onKeyUp(e) {
       // console.log("Down released"); 
       break; //Down key
     // default: console.log("?"); //Everything else
-
-}
+  }
 }
 
 function onFire() {
   // how to implement delay between bullets?
+
+  var num_bullets = 0;
+  // Object.keys(bullets[me_id]).forEach(function(key) {
+  //   // console.log(key, dictionary[key]);
+  // });
+
   // todo - check if max_bullet
+
+  // todo - check if bullet_delay surpassed
+
 }
 
 function rotatePlayer(player) {
@@ -111,9 +124,11 @@ function update() {
   rotatePlayer(me);
   movePlayer(me);
 
-  Object.keys(bullets).forEach(function(key) {
+  Object.keys(bullets).forEach(function(player_key) {
     // console.log(key, dictionary[key]);
-    updateBullet(bullets[key]);
+    bullets[player_key].forEach(function(bullet_key) {
+      updateBullet(bullets[player_key][bullet_key]);
+    });
   });
 
   // bullets.forEach(updateBullet);
@@ -139,12 +154,12 @@ export function stopCapturingInput() {
   window.removeEventListener('keyup', onKeyUp);
 }
 
-var initTime;
 
 let updateInterval;
 export function startEventLoop() {
   clearInterval(updateInterval);
   updateInterval = setInterval(update, 1000 / UPDATE_FPS);
 
-  // initTime = 
+  var d = new Date();
+  initTime = d.getTime();
 }
