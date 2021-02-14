@@ -1,5 +1,6 @@
 import { startCapturingInput, stopCapturingInput } from './input.js';
 import { startRendering, stopRendering } from './render.js';
+import { startEventLoop } from './input.js'
 
 
 // Learn more about this file at:
@@ -27,6 +28,7 @@ playButton.onclick = () => {
   // initState();
   // console.log("alksjd");
   startCapturingInput();
+  startEventLoop();
   startRendering();
   // setLeaderboardHidden(false);
 };
