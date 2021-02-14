@@ -7,6 +7,7 @@ const MAX_BULLETS = 5;
 const BULLET_DELAY = 100; // ms
 
 const BULLET_SPEED = 4;
+const BULLET_TIMEOUT = 1000; // ms
 
 const UPDATE_FPS = 60;
 
@@ -17,9 +18,9 @@ var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "a
 var dummy_players = {0: dummy_me};
 
 var dummy_bullets_0 = [
-  {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
-  {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
-  {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
+  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
+  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
+  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
   ];
 
 var dummy_bullets = {0: dummy_bullets_0};
@@ -36,12 +37,15 @@ var me = players[me_id];
 var initTime;
 var lastBulletTime;
 
+var bulletIds = Array(MAX_BULLETS).fill(1).map((x, y) => x + y);
+
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
 
-function createBullet(player_id) {
+function createBullet(player_id, t) {
   var player_bullets = bullets[player_id];
-  player_bullets.push({"x": me.x, "y": me.y, "v_x": BULLET_SPEED * -Math.sin(me.theta), "v_y": BULLET_SPEED * -Math.cos(me.theta)});
+  player_bullets.push({"id": bulletIds.shift(), "x": me.x, "y": me.y, "v_x": BULLET_SPEED * -Math.sin(me.theta), "v_y": BULLET_SPEED * -Math.cos(me.theta),
+  "fire_time": t, "elapsed_time": 0});
 }
 
 function onKeyDown(e) {
@@ -125,7 +129,7 @@ function onFire() {
       
       console.log("fire");
 
-      createBullet(me_id);
+      createBullet(me_id, currentTime);
 
       lastBulletTime = currentTime;
       // console.log("lastBulletTime: ", lastBulletTime);
@@ -157,10 +161,31 @@ function movePlayer(player) {
 function updateBullet(bullet) {
   console.log("Bullet updated.");
 
+  var d = new Date();
+  bullet.elapsed_time = d.getTime() - bullet.fire_time;
+
+  if (bullet.elapsed_time >= BULLET_TIMEOUT) {
+    destroyBullet(bullet.id);
+    return;
+  }
+
   if (bullet.v_y != 0 || bullet.v_x != 0) {  
     bullet.x += bullet.v_x;
     bullet.y += bullet.v_y;
   }
+}
+
+function destroyBullet(bullet_id) {
+  var player_bullets = bullets[me_id];
+
+  for (let i = 0; i < player_bullets.length; i++) {
+    if (player_bullets[i].id == bullet_id) {
+      player_bullets.splice(i, 1);
+      break;
+    }
+  }
+
+  bulletIds.push(bullet_id);
 }
 
 function update() {
@@ -198,6 +223,8 @@ export function startEventLoop() {
 
   var d = new Date();
   initTime = d.getTime();
+
+  console.log("bullet ids" + bulletIds);
 
   lastBulletTime = 0;
 }
