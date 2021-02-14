@@ -21,8 +21,10 @@ var dummy_bullets = {me_id: dummy_bullets_0};
 
 var dummy_state = [dummy_players, dummy_bullets];
 
-var players = dummy_state[0];
-var bullets = dummy_state[1];
+var state = dummy_state;
+
+var players = state[0];
+var bullets = state[1];
 
 var me = players[me_id];
 
