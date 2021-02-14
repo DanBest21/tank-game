@@ -1,6 +1,6 @@
-import { startCapturingInput, stopCapturingInput } from './input.js';
+import { startCapturingInput, stopCapturingInput, startEventLoop } from './input.js';
 import { startRendering, stopRendering } from './render.js';
-import { startEventLoop } from './input.js'
+// import { startEventLoop } from './input.js'
 
 // const playMenu = document.getElementById('play-menu');
 const playButton = document.getElementById('play-button');

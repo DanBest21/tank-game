@@ -83,8 +83,8 @@ function rotatePlayer(player) {
 
 function movePlayer(player) {
   if (player.speed != 0) {
-  player.x = player.x - (player.speed * Math.sin(player.theta))
-  player.y = player.y - (player.speed * Math.cos(player.theta))
+    player.x = player.x - (player.speed * Math.sin(player.theta))
+    player.y = player.y - (player.speed * Math.cos(player.theta))
   }
 }
 
