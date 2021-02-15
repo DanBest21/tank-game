@@ -39,8 +39,6 @@ var lastBulletTime;
 
 var bulletIds = Array(MAX_BULLETS).fill(1).map((x, y) => x + y);
 
-var d = new Date();
-
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
 
@@ -112,7 +110,7 @@ function onFire() {
   var elapsed;
 
   if (num_bullets < MAX_BULLETS) {
-
+    var d = new Date();
     var currentTime = d.getTime();
     console.log("current: ", currentTime);
     elapsed = currentTime - lastBulletTime;
@@ -162,6 +160,7 @@ function createBullet(player_id, t) {
 function updateBullet(bullet) {
   console.log("Bullet updated.");
 
+  var d = new Date();
   bullet.elapsed_time = d.getTime() - bullet.fire_time;
 
   if (bullet.elapsed_time >= BULLET_TIMEOUT) {
@@ -225,6 +224,7 @@ export function startEventLoop() {
   clearInterval(updateInterval);
   updateInterval = setInterval(update, 1000 / UPDATE_FPS);
 
+  var d = new Date();
   initTime = d.getTime();
 
   console.log("bullet ids" + bulletIds);
