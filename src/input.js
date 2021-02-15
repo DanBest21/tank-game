@@ -8,11 +8,13 @@ var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity
 
 var dummy_players = {0: dummy_me, 1: dummy_other};
 
-var dummy_walls = [
-  [[1, 1], [1, 0], [0, 1]],
-  [[0, 1], [0, 0], [0, 1]],
-  [[1, 0], [1, 0], [0, 0]]
-];
+// var dummy_walls = [
+//   [[1, 1], [1, 0], [0, 1]],
+//   [[0, 1], [0, 0], [0, 1]],
+//   [[1, 0], [1, 0], [0, 0]]
+// ];
+
+var dummy_walls = newMap(10,10);
 
 var dummy_bullets_0 = [];
 
@@ -41,6 +43,31 @@ var bulletIds = Array(MAX_BULLETS).fill(1).map((x, y) => x + y);
 
 // todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
 // todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
+
+function newMap(width, height) {
+  const map = [];
+
+  const horizontalBorder = [[true, true]];
+  for (let i = 1; i < width-1; i++) {
+      horizontalBorder.push([true, false]);
+  }
+  horizontalBorder.push([true, true]);
+
+  map.push(horizontalBorder);
+
+  for (let i = 1; i < height-1; i++) {
+      const row = [[false, true]];
+      for (let j = 1; j < width-1; j++) {
+          row.push([Math.random() < 0.125, Math.random() < 0.125]);
+      }
+      row.push([false, true]);
+      map.push(row);
+  }
+
+  map.push(horizontalBorder);
+
+  return map;
+}
 
 function onKeyDown(e) {
   switch (e.keyCode) {
