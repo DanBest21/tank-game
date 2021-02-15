@@ -1,8 +1,8 @@
-import { getMeId, getBullets, getPlayers } from "./input.js"
+import { getMeId, getBullets, getPlayers, getWalls } from "./input.js"
 
 
 // todo - move constants to some shared location (obtained from server?)
-import { MAP_WIDTH, MAP_HEIGHT, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
+import { MAP_WIDTH, MAP_HEIGHT, WALL_THICKNESS, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
 
 // const WALL_RADIUS = 2;
 
@@ -25,8 +25,7 @@ function render() {
   var players = getPlayers();
   var me = players[getMeId()]; // dummy me
   var bullets = getBullets(); // todo - get
-  var others;  // todo - get
-  var walls;   // todo - get
+  var walls = getWalls();   // todo - get
 
   if (!me) {
     return;
@@ -35,6 +34,7 @@ function render() {
   renderBackground(0, 0);
 
   // todo - render walls
+  renderWalls(walls);
 
   // render player
   // renderPlayer(me, me)
@@ -85,6 +85,67 @@ function renderBullet(bullet) {
   context.fill();
 }
 
+function renderWalls(walls) {
+
+  let vertical_wall, horizontal_wall;
+  let wall_x, wall_y;
+
+  let num_block_cols = walls[0].length;
+  let num_block_rows = walls.length;
+
+  // console.log("block nums: ", walls.length, walls[0].length);
+
+  // console.log("canvas size: ", canvas.width, canvas.height);
+
+  // console.log("canvas size: ", (canvas.width - WALL_THICKNESS), (canvas.height - WALL_THICKNESS));
+
+  let block_width = (canvas.width - WALL_THICKNESS) / (num_block_cols-1);
+  let block_height = (canvas.height - WALL_THICKNESS) / (num_block_rows-1);
+
+  // console.log("block size: ", block_height, block_width);
+
+  for (let row=0; row<walls.length; row++) {
+    for (let col=0; col<walls[row].length; col++) {
+
+      vertical_wall = walls[row][col][1];
+      horizontal_wall = walls[row][col][0];
+      
+      wall_x = col * block_width;
+      wall_y = row * block_height;
+
+      // console.log("  ");
+      // console.log("row, col: ", row, col);
+      // console.log("wall position: ", wall_x, wall_y);
+      // console.log("wall bool: ", vertical_wall, horizontal_wall);
+
+      context.fillStyle = 'black';
+  
+
+      if (vertical_wall) {
+        // todo - draw wall
+        context.fillRect(
+          wall_x,
+          wall_y,
+          WALL_THICKNESS,
+          block_height
+        );
+      }
+
+      if (horizontal_wall) {
+        // todo - draw wall
+        context.fillRect(
+          wall_x,
+          wall_y,
+          block_width,
+          WALL_THICKNESS
+        );
+      }
+
+    }
+  }
+
+}
+
 let renderInterval;
 export function startRendering() {
   // alert("hello");
@@ -94,6 +155,7 @@ export function startRendering() {
 }
 
 export function stopRendering() {
-  // clearInterval(renderInterval);
+  clearInterval(renderInterval);
+  // console.log("stopped rendering");
   // renderInterval = setInterval(renderMainMenu, 1000 / 60);
 }

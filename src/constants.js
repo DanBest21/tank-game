@@ -1,6 +1,7 @@
+export const WALL_THICKNESS = 4;
 
-export const MAP_WIDTH = 400;
-export const MAP_HEIGHT = 400;
+export const MAP_WIDTH = 400 + WALL_THICKNESS;
+export const MAP_HEIGHT = 400 + WALL_THICKNESS;
 
 export const SPEED = 3;
 export const ROTATION_SPEED = 3;

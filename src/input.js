@@ -100,10 +100,10 @@ function onKeyUp(e) {
 function onFire() {
   // how to implement delay between bullets?
 
-  console.log("onFire");
+  // console.log("onFire");
 
   var num_bullets = bullets[me_id].length;
-  console.log(num_bullets);
+  // console.log(num_bullets);
   // console.log(Object.keys(bullets[me_id]));
   // console.log(Object.keys(bullets[me_id]).length);
 
@@ -112,22 +112,22 @@ function onFire() {
   if (num_bullets < MAX_BULLETS) {
     var d = new Date();
     var currentTime = d.getTime();
-    console.log("current: ", currentTime);
+    // console.log("current: ", currentTime);
     elapsed = currentTime - lastBulletTime;
-    console.log("elapsed: ", elapsed)
+    // console.log("elapsed: ", elapsed)
 
     // console.log("lastBulletTime: ", lastBulletTime);
 
     if (elapsed >= BULLET_DELAY) {
       
-      console.log("fire");
+      // console.log("fire");
 
       createBullet(me_id, currentTime);
 
       lastBulletTime = currentTime;
       // console.log("lastBulletTime: ", lastBulletTime);
     } else {
-      console.log("cannot fire: not enough time passed since last bullet")
+      // console.log("cannot fire: not enough time passed since last bullet")
     }
 
     // console.log("lastBulletTime: ", lastBulletTime);
@@ -158,7 +158,7 @@ function createBullet(player_id, t) {
 }
 
 function updateBullet(bullet) {
-  console.log("Bullet updated.");
+  // console.log("Bullet updated.");
 
   var d = new Date();
   bullet.elapsed_time = d.getTime() - bullet.fire_time;
@@ -208,12 +208,18 @@ export function getPlayers() {
   return players;
 }
 
+export function getWalls() {
+  return walls;
+}
+
 export function startCapturingInput() {
   window.addEventListener('keydown', onKeyDown);
   window.addEventListener('keyup', onKeyUp);
 }
 
 export function stopCapturingInput() {
+  // console.log("stopped capturing input");
+
   window.removeEventListener('keydown', onKeyDown);
   window.removeEventListener('keyup', onKeyUp);
 }
@@ -227,7 +233,13 @@ export function startEventLoop() {
   var d = new Date();
   initTime = d.getTime();
 
-  console.log("bullet ids" + bulletIds);
+  // console.log("bullet ids" + bulletIds);
 
   lastBulletTime = 0;
+}
+
+export function stopEventLoop() {
+  // console.log("stopped event loop");
+  
+  clearInterval(updateInterval);
 }
