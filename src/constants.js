@@ -1,5 +1,6 @@
 
-export const MAP_SIZE = 500;
+export const MAP_WIDTH = 400;
+export const MAP_HEIGHT = 400;
 
 export const SPEED = 3;
 export const ROTATION_SPEED = 3;

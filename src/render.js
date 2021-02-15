@@ -2,9 +2,9 @@ import { getMeId, getBullets, getPlayers } from "./input.js"
 
 
 // todo - move constants to some shared location (obtained from server?)
-import { MAP_SIZE, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
+import { MAP_WIDTH, MAP_HEIGHT, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
 
-const WALL_RADIUS = 2;
+// const WALL_RADIUS = 2;
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -12,7 +12,8 @@ setCanvasDimensions();
 
 function setCanvasDimensions() {
   // todo - later remake this to be zoomed in on player
-  canvas.width = canvas.height = MAP_SIZE;
+  canvas.width = MAP_WIDTH;
+  canvas.height = MAP_HEIGHT;
 }
 
 // todo? - debouncing for resizing events: 
@@ -60,7 +61,7 @@ function renderPlayer(me, player) {
   // draw borders:
   context.strokeStyle = 'black';
   context.lineWidth = 1;
-  context.strokeRect(0, 0, MAP_SIZE, MAP_SIZE);
+  context.strokeRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
 
   // Draw player
   context.save();

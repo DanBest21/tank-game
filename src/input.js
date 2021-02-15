@@ -1,8 +1,8 @@
-import { MAP_SIZE, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_HEIGHT } from "./constants.js";
+import { MAP_WIDTH, MAP_HEIGHT, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_HEIGHT } from "./constants.js";
 
 const me_id = 0;
 
-var dummy_me = {"x": MAP_SIZE / 2, "y": MAP_SIZE / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
+var dummy_me = {"x": MAP_WIDTH / 2, "y": MAP_HEIGHT / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
 
 var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0};
 
@@ -12,13 +12,13 @@ var dummy_walls = [
   [[1, 1], [1, 0], [0, 1]],
   [[0, 1], [0, 0], [0, 1]],
   [[1, 0], [1, 0], [0, 0]]
-]
+];
 
-var dummy_bullets_0 = [
-  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1},
-  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1},
-  // {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
-  ];
+var dummy_bullets_0 = [];
+
+// {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": 1}
+// {"x": dummy_me.x, "y": dummy_me.y, "v_x": 1, "v_y": -1}
+// {"x": dummy_me.x, "y": dummy_me.y, "v_x": -1, "v_y": 1}
 
 var dummy_bullets_1 = [];
 
