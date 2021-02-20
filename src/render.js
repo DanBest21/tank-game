@@ -1,4 +1,4 @@
-import { getMeId, getBullets, getPlayers, getWalls } from "./input.js"
+import { getMeId, getBullets, getPlayers, getWalls } from "./game.js"
 
 
 // todo - move constants to some shared location (obtained from server?)

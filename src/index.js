@@ -1,4 +1,5 @@
-import { startCapturingInput, stopCapturingInput, startEventLoop, stopEventLoop } from './input.js';
+import { startCapturingInput, stopCapturingInput  } from './input.js';
+import { startEventLoop, stopEventLoop } from './game.js'
 import { startRendering, stopRendering } from './render.js';
 
 // const playMenu = document.getElementById('play-menu');
