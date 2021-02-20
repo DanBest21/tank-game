@@ -14,7 +14,7 @@ var dummy_players = {0: dummy_me, 1: dummy_other};
 //   [[1, 0], [1, 0], [0, 0]]
 // ];
 
-var dummy_walls = newMap(10,10);
+var dummy_walls = newMap(20,10);
 
 var dummy_bullets_0 = [];
 
@@ -51,14 +51,17 @@ function newMap(width, height) {
   for (let i = 1; i < width-1; i++) {
       horizontalBorder.push([true, false]);
   }
-  horizontalBorder.push([true, true]);
+  horizontalBorder.push([false, true]);
 
   map.push(horizontalBorder);
 
   for (let i = 1; i < height-1; i++) {
       const row = [[false, true]];
       for (let j = 1; j < width-1; j++) {
-          row.push([Math.random() < 0.125, Math.random() < 0.125]);
+          // row.push([Math.random() < 0.125, Math.random() < 0.125]);
+          let a = Math.random() < 0.5
+          row.push([a, !a]);
+          // todo - replace with maze generation algorithm
       }
       row.push([false, true]);
       map.push(row);
