@@ -3,9 +3,6 @@ import {
   onFire, onLeftPressed, onRightPressed, onUpPressed, onDownPressed, 
   onLeftReleased, onRightReleased, onUpReleased, onDownReleased} from './game.js'
 
-// todo - should theta be renamed? or otherwise, should speed be renamed to 'r' to be in mathematical notation?
-// todo - possibly add lines showing coordinates on screen of every object (player) for debugging purposes
-
 function onKeyDown(e) {
   switch (e.keyCode) {
     case 32:

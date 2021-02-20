@@ -111,7 +111,6 @@ export function destroyBullet(bullet_id) {
 }
 
 export function update() {
-    rotatePlayer(me);
     movePlayer(me);
 
     Object.values(bullets).forEach(player_bullets => player_bullets.forEach(updateBullet));
@@ -151,6 +150,8 @@ export function getPlayers() {
 export function getWalls() {
     return walls;
 }
+
+// todo - add getState()
   
 export function onLeftPressed() {
     me.angular_velocity = ROTATION_SPEED;
