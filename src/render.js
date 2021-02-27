@@ -1,5 +1,5 @@
 import { getMeId, getBullets, getPlayers, getWalls } from "./game.js"
-import { MAP_WIDTH, MAP_HEIGHT, WALL_THICKNESS, RENDER_FPS, PLAYER_HEIGHT, PLAYER_WIDTH, BULLET_RADIUS } from "./constants.js";
+import { MAP_WIDTH, MAP_HEIGHT, WALL_THICKNESS, RENDER_FPS, BULLET_RADIUS, RENDER_BOUNDING_BOX } from "./constants.js";
 
 const canvas = document.getElementById('game-canvas');
 const context = canvas.getContext('2d');
@@ -22,7 +22,6 @@ function render() {
   }
 
   renderBackground(0, 0);
-
   renderWalls(walls);
 
   Object.values(players).forEach((player) => {renderPlayer(me, player)});
@@ -50,12 +49,28 @@ function renderPlayer(me, player) {
   context.rotate(-theta);
   context.fillStyle = 'red';
   context.fillRect(
-    -0.5*PLAYER_WIDTH,
-    -0.5*(PLAYER_HEIGHT),
-    PLAYER_WIDTH,
-    PLAYER_HEIGHT,
+    -0.5*player.width,
+    -0.5*(player.height),
+    player.width,
+    player.height,
   );
   context.restore();
+
+  if (RENDER_BOUNDING_BOX) {
+    renderBoundingBox(player);
+  }
+
+}
+
+function renderBoundingBox(player) {
+  context.fillStyle="rgba(0, 0, 255, 0.5)";
+  context.fillRect(
+    // todo - stop dividing here, better to store the value somehow
+    player.x-player.bounding_box.width/2,
+    player.y-player.bounding_box.height,
+    player.bounding_box.width,
+    player.bounding_box.height
+  )
 }
 
 function renderBullet(bullet) {
@@ -66,7 +81,6 @@ function renderBullet(bullet) {
 }
 
 function renderWalls(walls) {
-
   let vertical_wall, horizontal_wall;
   let wall_x, wall_y;
 
@@ -86,7 +100,6 @@ function renderWalls(walls) {
       wall_y = row * block_height;
 
       context.fillStyle = 'black';
-  
 
       if (vertical_wall) {
         context.fillRect(
@@ -105,10 +118,8 @@ function renderWalls(walls) {
           WALL_THICKNESS
         );
       }
-
     }
   }
-
 }
 
 let renderInterval;

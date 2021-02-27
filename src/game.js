@@ -1,4 +1,4 @@
-import { MAP_WIDTH, MAP_HEIGHT, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_HEIGHT } from "./constants.js";
+import { MAP_WIDTH, MAP_HEIGHT, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_WIDTH, PLAYER_HEIGHT } from "./constants.js";
 import { rotatePlayer, movePlayer} from "./physics.js"
 import { newMap } from "./map.js";
 
