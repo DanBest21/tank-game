@@ -1,12 +1,12 @@
 import { MAP_WIDTH, MAP_HEIGHT, MAX_BULLETS, BULLET_SPEED, BULLET_TIMEOUT, BULLET_DELAY, UPDATE_FPS, ROTATION_SPEED, SPEED, PLAYER_HEIGHT } from "./constants.js";
-import { rotatePlayer, movePlayer, processCollisions} from "./physics.js"
+import { rotatePlayer, movePlayer} from "./physics.js"
 import { newMap } from "./map.js";
 
 const me_id = 0;
 
-var dummy_me = {"x": MAP_WIDTH / 2, "y": MAP_HEIGHT / 2, "theta": 0, "speed": 0, "angular_velocity": 0};
+var dummy_me = {"x": MAP_WIDTH / 2, "y": MAP_HEIGHT / 2, "theta": 0, "speed": 0, "angular_velocity": 0, "bounding_box": {"width":10, "height":10}, "width": PLAYER_WIDTH, "height": PLAYER_HEIGHT};
 
-var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0};
+var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0, "bounding_box": {"width":10, "height":10}, "width": PLAYER_WIDTH, "height": PLAYER_HEIGHT};
 
 var dummy_players = {0: dummy_me, 1: dummy_other};
 
@@ -72,7 +72,7 @@ export function onFire() {
   
     // todo - check if bullet_delay surpassed
   
-  }
+}
   
 export function createBullet(player_id, t) {
     var player_bullets = bullets[player_id];
