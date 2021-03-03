@@ -5,7 +5,6 @@ import { newMap } from "./map.js";
 const me_id = 0;
 
 var dummy_me = {"x": MAP_WIDTH / 2, "y": MAP_HEIGHT / 2, "theta": 0, "speed": 0, "angular_velocity": 0, "bounding_box": {"width":10, "height":10}, "width": PLAYER_WIDTH, "height": PLAYER_HEIGHT};
-
 var dummy_other = {"x": 100, "y": 100, "theta": 3, "speed": 0, "angular_velocity": 0, "bounding_box": {"width":10, "height":10}, "width": PLAYER_WIDTH, "height": PLAYER_HEIGHT};
 
 var dummy_players = {0: dummy_me, 1: dummy_other};
@@ -110,7 +109,50 @@ export function destroyBullet(bullet_id) {
     bulletIds.push(bullet_id);
 }
 
+function updateBoundingBox(player) {
+    
+    let angle_to_corner = Math.atan2(player.width, player.height); // calculate angle to corner of tank
+    let bounding_box_half_diagonal = Math.sqrt((player.height/2)**2 + (player.width/2)**2);
+    // let bounding_box_half_diagonal = 11;
+    // todo - stop recalculating, store somewhere
+
+    let height_angle, width_angle;
+
+    console.log("a, b: ", player.height/2, player.width/2)
+    console.log("hypotenuse: ", bounding_box_half_diagonal);
+
+    console.log("theta: ", player.theta);
+    console.log("angle to corner: ", angle_to_corner);
+
+    // update bounding box
+    if (player.theta == 0) { // special case
+        console.log("0")
+        player.bounding_box.width = player.width;
+        player.bounding_box.height = player.height;
+    } else if (player.theta > 0 && player.theta < Math.PI/2 || player.theta > Math.PI && player.theta < (Math.PI * 3/2)) {
+        console.log("a")
+        width_angle = player.theta + angle_to_corner;
+        height_angle = player.theta - angle_to_corner;
+
+    } else {
+        console.log("b")
+        width_angle = player.theta - angle_to_corner;
+        height_angle = player.theta + angle_to_corner;
+    }
+
+    player.bounding_box.height = 2 * bounding_box_half_diagonal * Math.cos(height_angle);
+    player.bounding_box.width = 2 * bounding_box_half_diagonal * Math.sin(width_angle);
+
+    console.log("width angle: ", width_angle);
+    console.log("height angle: ", height_angle);
+
+    
+    // i don't know if this is a good way of doing this...
+    // todo - update bounding box size
+}
+
 export function update() {
+    updateBoundingBox(me);
     movePlayer(me);
 
     Object.values(bullets).forEach(player_bullets => player_bullets.forEach(updateBullet));

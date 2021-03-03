@@ -67,7 +67,7 @@ function renderBoundingBox(player) {
   context.fillRect(
     // todo - stop dividing here, better to store the value somehow
     player.x-player.bounding_box.width/2,
-    player.y-player.bounding_box.height,
+    player.y-player.bounding_box.height/2,
     player.bounding_box.width,
     player.bounding_box.height
   )

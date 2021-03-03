@@ -17,3 +17,5 @@ export const PLAYER_HEIGHT = 20;
 
 export const UPDATE_FPS = 60;
 export const RENDER_FPS = 60;
+
+export const RENDER_BOUNDING_BOX = 1; // show bounding box of player characters
